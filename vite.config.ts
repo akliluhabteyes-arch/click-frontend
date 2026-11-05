@@ -7,7 +7,13 @@ import { componentTagger } from "lovable-tagger";
 const allowedHosts = ["localhost", ".onrender.com"];
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, command }) => {
+  // Hosting platforms often set NODE_ENV=production globally. If the dev server
+  // (`vite`) runs with it, React's production runtime is loaded while JSX is
+  // compiled for development → "_jsxDEV is not a function". Keep them in sync.
+  process.env.NODE_ENV = command === "build" && mode === "production" ? "production" : "development";
+
+  return {
   base: "/",
   server: {
     host: "::",
@@ -31,4 +37,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-}));
+  };
+});
