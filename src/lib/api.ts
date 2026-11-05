@@ -1,6 +1,21 @@
 // ClickAddis API client — all website content comes from the backend.
+// Set VITE_API_URL in the hosting dashboard; falls back to the deployed backend.
+// For local development, .env.development points it to http://localhost:5000/api.
 export const API_URL = (import.meta.env.VITE_API_URL || "https://click-backend-xjio.onrender.com/api").replace(/\/+$/, "");
-// export const API_URL = (import.meta.env.VITE_API_URL || "https://localhost:5000/api").replace(/\/+$/, "");
+
+/** True when a deployed (non-local) site was built pointing at a localhost API. */
+export const API_MISCONFIGURED =
+  import.meta.env.PROD &&
+  typeof window !== "undefined" &&
+  !/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) &&
+  /\/\/(localhost|127\.0\.0\.1)/.test(API_URL);
+
+if (API_MISCONFIGURED) {
+  console.error(
+    `[ClickAddis] This site was built with VITE_API_URL=${API_URL}, which visitors cannot reach. ` +
+      "Set VITE_API_URL to the deployed backend in the hosting dashboard and redeploy."
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Types (mirror the Supabase tables)

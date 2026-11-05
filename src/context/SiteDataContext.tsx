@@ -2,7 +2,7 @@ import { createContext, useContext, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { RefreshCw } from "lucide-react";
-import { getSiteData, type SiteData } from "@/lib/api";
+import { getSiteData, API_URL, API_MISCONFIGURED, type SiteData } from "@/lib/api";
 import fallbackLogo from "@/assets/clickaddis-logo.png";
 
 const SiteDataContext = createContext<SiteData | null>(null);
@@ -63,6 +63,14 @@ export const SiteDataProvider = ({ children }: { children: ReactNode }) => {
           <p className="text-sm text-muted-foreground max-w-sm">
             The website content could not be loaded. Please check your connection and try again.
           </p>
+          {API_MISCONFIGURED && (
+            <p className="text-xs text-destructive max-w-sm">
+              Configuration error: this site is pointing to {API_URL}. Set VITE_API_URL to the deployed
+              backend and redeploy.
+            </p>
+          )}
+          {/* the server address, to help diagnose deployment problems */}
+          <p className="text-[11px] text-muted-foreground/60 break-all">API: {API_URL}</p>
         </div>
         <button
           onClick={() => refetch()}
