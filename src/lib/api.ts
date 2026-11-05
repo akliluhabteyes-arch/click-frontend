@@ -1,5 +1,6 @@
 // ClickAddis API client — all website content comes from the backend.
-export const API_URL = (import.meta.env.VITE_API_URL || "https://click-backend-xjio.onrender.com//api").replace(/\/+$/, "");
+export const API_URL = (import.meta.env.VITE_API_URL || "https://click-backend-xjio.onrender.com/api").replace(/\/+$/, "");
+// export const API_URL = (import.meta.env.VITE_API_URL || "https://localhost:5000/api").replace(/\/+$/, "");
 
 // ---------------------------------------------------------------------------
 // Types (mirror the Supabase tables)
