@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "node -e \"const p=require('path').resolve('dist');console.log('\\nBuild output folder:',p,'| exists:',require('fs').existsSync(p))\"",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
